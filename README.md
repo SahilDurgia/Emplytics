@@ -1,73 +1,151 @@
-# React + TypeScript + Vite
+# 🚀 Emplytics Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive employee analytics dashboard built with **React, TypeScript, AG Grid, and Tailwind CSS**.
+Designed to provide quick insights into workforce data with a clean and professional UI.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:**
+https://emplytics.sahildurgia44.workers.dev/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 📌 Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Emplytics is a data-driven dashboard that allows users to:
 
-## Expanding the ESLint configuration
+* View and manage employee information
+* Analyze performance metrics
+* Filter and search data efficiently
+* Export structured data for external use
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+This project was developed as part of an **interview assignment**, focusing on UI quality, performance, and real-world usability.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## ✨ Features
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 📊 Data Grid (AG Grid)
+
+* Advanced sorting & filtering
+* Quick search functionality
+* Pagination support
+* Row selection
+* CSV export capability
+
+### 🎨 Modern UI
+
+* Clean SaaS-style layout
+* Soft shadows and rounded components
+* Gradient accents for premium feel
+* Responsive design
+
+### 🧠 Smart Data Handling
+
+* Derived metrics (average rating, totals, etc.)
+* Efficient rendering using React hooks (`useMemo`, `useRef`)
+* Type-safe implementation with TypeScript
+
+---
+
+## 🛠️ Tech Stack
+
+* **Frontend:** React + TypeScript
+* **Styling:** Tailwind CSS (v4)
+* **Data Grid:** AG Grid
+* **Build Tool:** Vite
+* **Deployment:** Cloudflare Pages / Workers
+
+---
+
+## ⚙️ Installation & Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/emplytics-dashboard.git
+cd emplytics-dashboard
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Install dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+Run locally:
+
+```bash
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
+
+---
+
+## 📤 Deployment
+
+This project is deployed on **Cloudflare** for fast and reliable global delivery.
+
+**Live URL:**
+https://emplytics.sahildurgia44.workers.dev/
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+│── components/
+│   ├── DataGrid.tsx
+│   ├── StatsCards.tsx
+│   ├── Dashboard.tsx
+│
+│── data/
+│   └── employees.ts
+│
+│── types/
+│   └── employee.ts
+│
+│── App.tsx
+│── main.tsx
+```
+
+---
+
+## 🎯 Key Highlights
+
+* Built with a focus on **real-world dashboard usability**
+* Clean and maintainable component structure
+* Strong emphasis on **UI/UX polish**
+* Production-ready deployment
+
+---
+
+## 🚀 Future Improvements
+
+* Add charts and analytics visualization
+* Role-based access / authentication
+* API integration for dynamic data
+* Column customization & saved views
+
+---
+
+## 👨‍💻 Author
+
+**Sahil Durgia**
+
+* Passionate about building clean and scalable frontend applications
+* Focused on modern UI/UX and real-world problem solving
+
+---
+
+## ⭐ Feedback
+
+If you have any feedback or suggestions, feel free to reach out!
+
+---
+
+> This project demonstrates practical frontend skills, attention to detail, and the ability to build production-ready dashboards.
