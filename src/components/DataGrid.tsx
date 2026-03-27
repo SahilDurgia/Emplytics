@@ -95,7 +95,10 @@ export default function DataGrid({ rowData }: Props) {
     ],
     [],
   );
-
+  // 📤 Export to CSV
+  const exportToCSV = () => {
+    gridRef.current?.api.exportDataAsCsv();
+  };
   // ⚙️ Default Column Config
   const defaultColDef = useMemo<ColDef>(
     () => ({
@@ -116,6 +119,12 @@ export default function DataGrid({ rowData }: Props) {
           onChange={onQuickFilterChange}
           className="border px-3 py-2 rounded w-72"
         />
+        <button
+          onClick={exportToCSV}
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Export CSV
+        </button>
       </div>
 
       {/* 📊 AG Grid */}
