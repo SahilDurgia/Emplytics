@@ -88,11 +88,15 @@ export default function DataGrid({ rowData }: Props) {
         cellRenderer: (params: ICellRendererParams<Employee, string[]>) => {
           return params.value?.join(", ") || "—";
         },
+        sortable: true,
+        filter: true,
       },
       {
         field: "manager",
         headerName: "Manager",
         valueFormatter: (params) => params.value || "—",
+        sortable: true,
+        filter: true,
       },
     ],
     [],
@@ -131,7 +135,7 @@ export default function DataGrid({ rowData }: Props) {
       </div>
 
       {/* 📊 AG Grid */}
-      <div className=" w-full h-100 rounded-2xl overflow-hidden border border-gray-200 shadow-xl">
+      <div className=" w-full h-100 rounded-2xl  border border-gray-200 shadow-xl">
         <AgGridReact<Employee>
           ref={gridRef}
           theme={themeAlpine}
