@@ -1,99 +1,136 @@
+import { useRef, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { useMemo, useRef } from "react";
-import type { ColDef } from "ag-grid-community";
-import type { Employee } from "../types/employee";
+import type { ColDef, ICellRendererParams } from "ag-grid-community";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
+import type { Employee } from "../types/employee";
+
 type Props = {
   rowData: Employee[];
 };
 
-const DataGrid = ({ rowData }: Props) => {
+export default function DataGrid({ rowData }: Props) {
   const gridRef = useRef<AgGridReact<Employee>>(null);
-  console.log("rowData:", rowData);
-  // Column Definitions
+
+  // 🔍 Quick Search
+  const onQuickFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    gridRef.current?.api.setGridOption("quickFilterText", e.target.value);
+  };
+
+  // 🎯 Column Definitions
   const columnDefs = useMemo<ColDef<Employee>[]>(
     () => [
-      { field: "id", maxWidth: 90 },
-
       {
         headerName: "Name",
         valueGetter: (params) =>
           `${params.data?.firstName} ${params.data?.lastName}`,
+        sortable: true,
+        filter: true,
       },
-
-      { field: "email" },
-      { field: "department" },
-      { field: "position" },
-
       {
-        field: "salary",
-        valueFormatter: (params) => `$${params.value?.toLocaleString()}`,
+        field: "email",
+        sortable: true,
+        filter: true,
       },
-
-      { field: "age", maxWidth: 100 },
-      { field: "location" },
-
       {
-        field: "performanceRating",
-        headerName: "Performance",
-        cellStyle: (params) => ({
-          fontWeight: params.value > 4.5 ? "600" : "400",
-          color: params.value > 4.5 ? "#16a34a" : "#374151",
-        }),
+        field: "department",
+        sortable: true,
+        filter: true,
       },
-
+      {
+        field: "position",
+        sortable: true,
+        filter: true,
+      },
       {
         field: "projectsCompleted",
         headerName: "Projects",
+        sortable: true,
+        filter: "agNumberColumnFilter",
       },
-
       {
+        field: "performanceRating",
+        headerName: "Rating",
+        sortable: true,
+        filter: "agNumberColumnFilter",
+        cellStyle: (params) => {
+          if (params.value >= 4) {
+            return { color: "green", fontWeight: "bold" };
+          } else if (params.value >= 3) {
+            return { color: "orange", fontWeight: "normal" };
+          } else {
+            return { color: "red", fontWeight: "normal" };
+          }
+        },
+      },
+      {
+        field: "isActive",
         headerName: "Status",
-        valueGetter: (params) =>
-          params.data?.isActive ? "Active" : "Inactive",
-        cellStyle: (params) => ({
-          color: params.value === "Active" ? "#16a34a" : "#dc2626",
-          fontWeight: "500",
-        }),
+        sortable: true,
+        filter: true,
+        cellRenderer: (params: ICellRendererParams<Employee, boolean>) => {
+          return params.value ? (
+            <span className="bg-green-100 text-green-700 px-2 py-1 rounded text-xs">
+              Active
+            </span>
+          ) : (
+            <span className="bg-red-100 text-red-700 px-2 py-1 rounded text-xs">
+              Inactive
+            </span>
+          );
+        },
+      },
+      {
+        field: "skills",
+        headerName: "Skills",
+        cellRenderer: (params: ICellRendererParams<Employee, string[]>) => {
+          return params.value?.join(", ") || "—";
+        },
+      },
+      {
+        field: "manager",
+        headerName: "Manager",
+        valueFormatter: (params) => params.value || "—",
       },
     ],
     [],
   );
 
-  // Default column behavior
-  const defaultColDef = useMemo<ColDef<Employee>>(
+  // ⚙️ Default Column Config
+  const defaultColDef = useMemo<ColDef>(
     () => ({
       flex: 1,
       minWidth: 120,
       resizable: true,
-      sortable: true,
-      filter: true,
     }),
     [],
   );
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm p-4">
-      <div className="overflow-x-auto">
-        <div
-          className="ag-theme-alpine min-w-150 xxs:min-w-[700px] xs:min-w-[800px] sm:min-w-225"
-          // AG Grid needs an explicit height; some Tailwind height classes may be invalid.
-          style={{ height: 500 }}
-        >
-          <AgGridReact<Employee>
-            ref={gridRef}
-            rowData={rowData}
-            columnDefs={columnDefs}
-            defaultColDef={defaultColDef}
-            animateRows={true}
-            // Avoid AG Grid error #239 by selecting the legacy CSS theme mode.
-            theme="legacy"
-          />
-        </div>
+    <div className="w-full">
+      {/* 🔍 Search Bar */}
+      <div className="mb-4 flex justify-between items-center">
+        <input
+          type="text"
+          placeholder="Search employees..."
+          onChange={onQuickFilterChange}
+          className="border px-3 py-2 rounded w-72"
+        />
+      </div>
+
+      {/* 📊 AG Grid */}
+      <div className="ag-theme-alpine w-full h-150 rounded-lg shadow">
+        <AgGridReact<Employee>
+          ref={gridRef}
+          rowData={rowData}
+          columnDefs={columnDefs}
+          defaultColDef={defaultColDef}
+          pagination={true}
+          paginationPageSize={20}
+          rowSelection="multiple"
+          animateRows={true}
+        />
       </div>
     </div>
   );
-};
-
-export default DataGrid;
+}
