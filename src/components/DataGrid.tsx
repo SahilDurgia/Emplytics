@@ -1,8 +1,10 @@
 import { useRef, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
-import type { ColDef, ICellRendererParams } from "ag-grid-community";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import {
+  themeAlpine,
+  type ColDef,
+  type ICellRendererParams,
+} from "ag-grid-community";
 import type { Employee } from "../types/employee";
 
 type Props = {
@@ -112,25 +114,27 @@ export default function DataGrid({ rowData }: Props) {
   return (
     <div className="w-full">
       {/* 🔍 Search Bar */}
-      <div className="mb-4 flex justify-between items-center">
+      <div className="mb-5 flex justify-between items-center gap-3">
         <input
           type="text"
           placeholder="Search employees..."
           onChange={onQuickFilterChange}
-          className="border px-3 py-2 rounded w-72"
+          className="px-4 py-2 rounded-xl border border-gray-300 bg-white shadow-sm focus:ring-2 focus:ring-indigo-500 outline-none w-72 transition"
         />
+
         <button
           onClick={exportToCSV}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="px-4 py-2 rounded-xl bg-linear-to-r from-indigo-500 to-blue-600 text-white shadow-md hover:shadow-lg hover:scale-[1.03] transition"
         >
           Export CSV
         </button>
       </div>
 
       {/* 📊 AG Grid */}
-      <div className="ag-theme-alpine w-full h-150 rounded-lg shadow">
+      <div className=" w-full h-100 rounded-2xl overflow-hidden border border-gray-200 shadow-xl">
         <AgGridReact<Employee>
           ref={gridRef}
+          theme={themeAlpine}
           rowData={rowData}
           columnDefs={columnDefs}
           defaultColDef={defaultColDef}
